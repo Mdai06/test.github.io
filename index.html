@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài tập 10 - JavaScript DOM</title>
+
+    <!-- CSS: Định dạng giao diện -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        section {
+            border: 1px solid gray;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #hinhChuNhat {
+            width: 300px;
+            height: 150px;
+            background-color: lightgray;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>BÀI TẬP 10 - JAVASCRIPT DOM</h1>
+    <hr>
+
+    <!-- ========== BÀI 1 ========== -->
+    <section>
+        <h2>Bài 1: Thay đổi nội dung tiêu đề</h2>
+
+        <h1 id="title">Xin chào</h1>
+
+        <button onclick="thayDoi()">
+            Thay đổi tiêu đề
+        </button>
+    </section>
+
+
+    <!-- ========== BÀI 2 ========== -->
+    <section>
+        <h2>Bài 2: Ẩn / Hiện phần tử</h2>
+
+        <p id="noidung">
+            Đây là đoạn văn được điều khiển bằng JavaScript.
+        </p>
+
+        <button onclick="anHien()">Ẩn / Hiện</button>
+    </section>
+
+
+    <!-- ========== BÀI 3 ========== -->
+    <section>
+        <h2>Bài 3: Đếm số lần click</h2>
+
+        <p>Số lần click: <span id="dem">0</span></p>
+
+        <button onclick="tangDem()">Click</button>
+        <button onclick="resetDem()">Reset</button>
+    </section>
+
+
+    <!-- ========== BÀI 4 ========== -->
+    <section>
+        <h2>Bài 4: Thay đổi màu nền theo input</h2>
+
+        <p>Chọn màu:</p>
+
+        <input type="color" id="chonMau">
+
+        <div id="hinhChuNhat"></div>
+    </section>
+
+
+    <!-- ========== BÀI 5 ========== -->
+    <section>
+        <h2>Bài 5: Thêm mục vào danh sách</h2>
+
+        <input type="text" id="nhapNoiDung"
+               placeholder="Nhập nội dung">
+
+        <button onclick="themMuc()">Thêm</button>
+
+        <h3>Danh sách:</h3>
+
+        <ul id="danhSach"></ul>
+    </section>
+
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+
+        // ===== BÀI 1: THAY ĐỔI TIÊU ĐỀ =====
+        function thayDoi() {
+            document.getElementById("title").textContent =
+                "Chào mừng bạn đến với JavaScript";
+
+            document.getElementById("title").style.color =
+                "blue";
+        }
+
+
+        // ===== BÀI 2: ẨN / HIỆN PHẦN TỬ =====
+        function anHien() {
+            var doanVan = document.getElementById("noidung");
+
+            if (doanVan.style.display == "none") {
+                doanVan.style.display = "block";
+            } else {
+                doanVan.style.display = "none";
+            }
+        }
+
+
+        // ===== BÀI 3: ĐẾM SỐ LẦN CLICK =====
+        var soDem = 0;
+
+        function tangDem() {
+            soDem = soDem + 1;
+
+            document.getElementById("dem").textContent = soDem;
+        }
+
+        function resetDem() {
+            soDem = 0;
+
+            document.getElementById("dem").textContent = soDem;
+        }
+
+
+        // ===== BÀI 4: THAY ĐỔI MÀU NỀN =====
+        var chonMau = document.getElementById("chonMau");
+
+        chonMau.addEventListener("input", function() {
+            var mau = chonMau.value;
+
+            document.getElementById("hinhChuNhat")
+                .style.backgroundColor = mau;
+        });
+
+
+        // ===== BÀI 5: THÊM MỤC VÀO DANH SÁCH =====
+        function themMuc() {
+            var input = document.getElementById("nhapNoiDung");
+
+            var noiDung = input.value.trim();
+
+            if (noiDung == "") {
+                alert("Vui lòng nhập nội dung!");
+                return;
+            }
+
+            var li = document.createElement("li");
+
+            li.textContent = noiDung;
+
+            document.getElementById("danhSach")
+                .appendChild(li);
+
+            input.value = "";
+        }
+
+        // Nhấn Enter để thêm mục
+        document.getElementById("nhapNoiDung")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key == "Enter") {
+                    themMuc();
+                }
+            });
+
+    </script>
+
+</body>
+</html>
